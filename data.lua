@@ -139,7 +139,7 @@ data:extend({
   {
 	type = "noise-expression",
 	name = "subsurface_richness_multiplier",
-	expression = "if(distance > 130, log2(subsurface_level + 1) + 0.1, subsurface_level == 0)",
+	expression = "if(subsurface_level == 0, 1, if(distance > 130, log2(subsurface_level + 1) + 0.1, 0))",
   },
   {
 	type = "noise-expression",
