@@ -980,3 +980,40 @@ function entity_selected(player, entity)
 		else table.insert(r.players, player) end
 	end
 end
+
+-- Restores ore patch amounts on top (non-subsurface) surfaces.
+-- The mod reduces resource amounts to 10% at distance > 130 from spawn via
+-- the "subsurface_richness_multiplier" noise expression (0.1 on top surfaces).
+-- This command multiplies affected ore entity amounts by 10 to undo that.
+commands.add_command(
+	"restore-ore-amounts",
+	"Restore ore patch amounts on the current top surface back to ~100% (undoes the Subsurface mod's 10% reduction at distance > 130 from spawn). Optional arg: surface name.",
+	function(cmd)
+		local player = cmd.player_index and game.get_player(cmd.player_index)
+		local function notify(msg)
+			if player then player.print(msg) else game.print(msg) end
+		end
+
+		local surface
+		if cmd.parameter and cmd.parameter ~= "" then
+			surface = game.get_surface(cmd.parameter)
+			if not surface then notify("Unknown surface: " .. cmd.parameter) return end
+		else
+			surface = player and player.surface or game.surfaces.nauvis
+		end
+
+		if is_subsurface(surface) then
+			notify("Run this on a top surface, not a subsurface. Got: " .. surface.name)
+			return
+		end
+
+		local count = 0
+		for _, e in pairs(surface.find_entities_filtered{type = "resource"}) do
+			if e.position.x * e.position.x + e.position.y * e.position.y > 130 * 130 then
+				e.amount = e.amount * 10
+				count = count + 1
+			end
+		end
+		notify("Restored " .. count .. " resource entities on surface '" .. surface.name .. "'.")
+	end
+)
