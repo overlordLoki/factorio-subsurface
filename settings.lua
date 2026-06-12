@@ -6,6 +6,13 @@ data:extend({
 	default_value = true
   },
   {
+	type = "bool-setting",
+	setting_type = "startup",
+	name = "reduce-surface-ore-richness",
+	default_value = false,
+	order = "z"
+  },
+  {
 	type = "int-setting",
 	setting_type = "runtime-global",
 	name = "subsurface-limit",

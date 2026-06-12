@@ -13,6 +13,20 @@ cave_sealing.action[1].action_delivery.target_effects = {
 	{type = "play-sound", sound = table.deepcopy(data.raw.tile["stone-path"].build_sound.large)}
 }
 
+local cave_bomb_projectile = table.deepcopy(data.raw.projectile["grenade"])
+cave_bomb_projectile.name = "cave-bomb-projectile"
+cave_bomb_projectile.action = {
+	type = "direct",
+	action_delivery = {
+		type = "instant",
+		target_effects = {
+			{type = "script", effect_id = "cave-bomb"},
+			{type = "create-entity", entity_name = "big-explosion"},
+		}
+	}
+}
+cave_bomb_projectile.final_action = nil
+
 for i = 0, 3 do
 	local sealed_entrance = table.deepcopy(data.raw["simple-entity"]["big-rock"])
 	sealed_entrance.name = "tunnel-entrance-sealed-"..i
@@ -61,6 +75,7 @@ subway_rail.hidden = true
 data:extend(
 {
   cave_sealing,
+  cave_bomb_projectile,
   drill_remnants,
   subway_rail,
   

@@ -1,6 +1,41 @@
 data:extend(
 {
   {
+	type = "capsule",
+	name = "cave-bomb",
+	icons = {
+	  {icon = "__base__/graphics/icons/grenade.png"},
+	  {icon = "__base__/graphics/icons/explosives.png", scale = 0.25, shift = {8, 8}},
+	},
+	subgroup = "capsule",
+	order = "z-cave-bomb",
+	stack_size = 50,
+	capsule_action = {
+	  type = "throw",
+	  attack_parameters = {
+		type = "projectile",
+		activation_type = "throw",
+		ammo_category = "grenade",
+		cooldown = 30,
+		projectile_creation_distance = 0.6,
+		range = 25,
+		ammo_type = {
+		  target_type = "position",
+		  action = {
+			type = "direct",
+			action_delivery = {
+			  type = "projectile",
+			  projectile = "cave-bomb-projectile",
+			  starting_speed = 0.3,
+			}
+		  }
+		},
+		sound = table.deepcopy(data.raw["capsule"]["grenade"].capsule_action.attack_parameters.sound),
+	  }
+	}
+  },
+
+  {
 	type = "item",
 	name = "surface-drill",
 	icons = {

@@ -139,7 +139,9 @@ data:extend({
   {
 	type = "noise-expression",
 	name = "subsurface_richness_multiplier",
-	expression = "if(subsurface_level == 0, 1, if(distance > 130, log2(subsurface_level + 1) + 0.1, 0))",
+	expression = settings.startup["reduce-surface-ore-richness"].value
+		and "if(distance > 130, log2(subsurface_level + 1) + 0.1, subsurface_level == 0)"
+		or "if(subsurface_level == 0, 1, if(distance > 130, log2(subsurface_level + 1) + 0.1, 0))",
   },
   {
 	type = "noise-expression",

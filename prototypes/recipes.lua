@@ -83,6 +83,18 @@ data:extend(
 	},
 	results = {{type = "item", name = "cave-sealing", amount = 1}}
   },
+  {
+	type = "recipe",
+	name = "cave-bomb",
+	enabled = false,
+	energy_required = 5,
+	ingredients =
+	{
+	  {type = "item", name = "explosives", amount = 10},
+	  {type = "item", name = "iron-plate", amount = 5},
+	},
+	results = {{type = "item", name = "cave-bomb", amount = 1}}
+  },
   
   {
 	type = "recipe",

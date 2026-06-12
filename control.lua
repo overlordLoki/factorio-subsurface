@@ -834,6 +834,11 @@ script.on_event(defines.events.on_script_trigger_effect, function(event)
 		clear_subsurface(surface, event.target_position, tonumber(radius) + 0.5)
 		surface.spill_item_stack{position = event.target_position, stack = {name = "stone", count = 20}, enable_looted = true, force = event.source_entity and event.source_entity.force or "neutral"}
 		surface.pollute(event.target_position, 10)
+	elseif event.effect_id == "cave-bomb" then
+		if is_subsurface(surface) then
+			clear_subsurface(surface, event.target_position, 16)
+			surface.pollute(event.target_position, 50)
+		end
 	elseif event.effect_id == "cave-sealing" then
 		
 		-- first, try to seal tunnel entrances
